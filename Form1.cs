@@ -37,8 +37,8 @@ public partial class Form1 : Form
 
         // Registrando CTRL + N
         RegisterHotKey(Handle, HOTKEY_ID_CTRL_N, MOD_CONTROL, (int)Keys.N);
-        // Registrando CTRL + O
-        RegisterHotKey(Handle, HOTKEY_ID_CTRL_O, MOD_CONTROL, (int)Keys.S);
+        // Registrando CTRL + S
+        RegisterHotKey(Handle, HOTKEY_ID_CTRL_S, MOD_CONTROL, (int)Keys.S);
         // Registrando CTRL + O
         RegisterHotKey(Handle, HOTKEY_ID_CTRL_O, MOD_CONTROL, (int)Keys.O);
         // Registrando F7
@@ -122,13 +122,13 @@ public partial class Form1 : Form
     //TODO: implementar chamada para as teclas de atalhos
     private void button_KeyDown(object? sender, KeyEventArgs e)
     {
-        if (e.Control && e.KeyCode == Keys.N)
+        if (e.Control)
             buttonNew_Click(sender, e);
 
-        else if (e.Control && e.KeyCode == Keys.O)
+        else if (e.Control)
             buttonOpen_Click(sender, e);
 
-        else if (e.Control && e.KeyCode == Keys.S)
+        else if (e.Control)
             buttonSave_Click(sender, e);
 
         else if (e.Control && e.KeyCode == Keys.C)
@@ -183,7 +183,7 @@ public partial class Form1 : Form
             {
                 try
                 {
-                    editor.SaveFile(saveFileDialog.FileName);
+                    editor.SaveFile(saveFileDialog.FileName, RichTextBoxStreamType.PlainText);
                     path = saveFileDialog.FileName;
                     newFile = false;
 
@@ -201,7 +201,7 @@ public partial class Form1 : Form
         {
             try
             {
-                editor.SaveFile(path);
+                editor.SaveFile(path, RichTextBoxStreamType.PlainText);
                 messageArea.Clear();
             }
             catch (Exception ex)
