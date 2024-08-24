@@ -1,10 +1,24 @@
 namespace appCompilador;
 
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 public partial class Form1 : Form
 {
+    [DllImport("user32.dll")]
+    private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
+
+    [DllImport("user32.dll")]
+    private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+    private const int MOD_CONTROL = 0x0002;
+    private const int WM_HOTKEY = 0x0312;
+    private const int HOTKEY_ID_CTRL_N = 1;
+    private const int HOTKEY_ID_CTRL_S = 2;
+    private const int HOTKEY_ID_CTRL_O = 3;
+    private const int HOTKEY_ID_F7 = 4;
+    private const int HOTKEY_ID_F1 = 5;
 
     private bool newFile = true;
     private string path = "";
@@ -12,6 +26,60 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
+        FormClosing += (s, e) =>
+        {
+            UnregisterHotKey(Handle, HOTKEY_ID_CTRL_N);
+            UnregisterHotKey(Handle, HOTKEY_ID_CTRL_S);
+            UnregisterHotKey(Handle, HOTKEY_ID_CTRL_O);
+            UnregisterHotKey(Handle, HOTKEY_ID_F7);
+            UnregisterHotKey(Handle, HOTKEY_ID_F1);
+        };
+
+        // Registrando CTRL + N
+        RegisterHotKey(Handle, HOTKEY_ID_CTRL_N, MOD_CONTROL, (int)Keys.N);
+        // Registrando CTRL + O
+        RegisterHotKey(Handle, HOTKEY_ID_CTRL_O, MOD_CONTROL, (int)Keys.S);
+        // Registrando CTRL + O
+        RegisterHotKey(Handle, HOTKEY_ID_CTRL_O, MOD_CONTROL, (int)Keys.O);
+        // Registrando F7
+        RegisterHotKey(Handle, HOTKEY_ID_F7, 0, (int)Keys.F7);
+        // Registrando F1
+        RegisterHotKey(Handle, HOTKEY_ID_F1, 0, (int)Keys.F1);
+    }
+    protected override void WndProc(ref Message m)
+    {
+        if (m.Msg == WM_HOTKEY)
+        {
+            int id = m.WParam.ToInt32();
+
+            if (id == HOTKEY_ID_CTRL_N)
+            {
+                // Handle CTRL + N hotkey
+                buttonNew_Click(this, EventArgs.Empty);
+            }
+            else if (id == HOTKEY_ID_CTRL_O)
+            {
+                // Handle CTRL + O hotkey
+                buttonOpen_Click(this, EventArgs.Empty);
+            }
+            if (id == HOTKEY_ID_CTRL_S)
+            {
+                // Handle CTRL + S hotkey
+                buttonSave_Click(this, EventArgs.Empty);
+            }
+            else if (id == HOTKEY_ID_F7)
+            {
+                // Handle F7 hotkey
+                buttonCompile_Click(this, EventArgs.Empty);
+            }
+            else if (id == HOTKEY_ID_F1)
+            {
+                // Handle F7 hotkey
+                buttonTeam_Click(this, EventArgs.Empty);
+            }
+        }
+
+        base.WndProc(ref m);
     }
 
     private void Form1_Load(object sender, EventArgs e)
@@ -26,14 +94,14 @@ public partial class Form1 : Form
         statusBarLabel.Text = "";
     }
 
-    private void richTextBox1_TextChanged(object sender, EventArgs e)
+    private void editor_TextChanged(object sender, EventArgs e)
     {
-        panel.Refresh();
+        //panelLineNumbers.Refresh();
     }
 
-    private void RichTextBox1_VScroll(object sender, EventArgs e)
+    private void editor_VScroll(object sender, EventArgs e)
     {
-        panel.Refresh();
+        //panelLineNumbers.Refresh();
     }
 
     private void panel_Paint(object sender, PaintEventArgs e)
@@ -160,11 +228,15 @@ public partial class Form1 : Form
 
     private void buttonCompile_Click(object sender, EventArgs e)
     {
-
+        messageArea.Clear();
+        messageArea.Text = "compilação de programas ainda não foi implementada";
     }
 
     private void buttonTeam_Click(object sender, EventArgs e)
     {
-
+        messageArea.Clear();
+        messageArea.Text = "Pedro, Marlon e Sara";
     }
+
+
 }
