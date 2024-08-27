@@ -66,7 +66,7 @@ partial class Form1
         buttonNew.ImageScaling = ToolStripItemImageScaling.None;
         buttonNew.ImageTransparentColor = Color.Magenta;
         buttonNew.Name = "buttonNew";
-        buttonNew.Size = new Size(100, 70);
+        buttonNew.Size = new Size(100, 60);
         buttonNew.Text = "Novo [Ctrl-n]";
         buttonNew.TextAlign = ContentAlignment.BottomCenter;
         buttonNew.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -79,7 +79,7 @@ partial class Form1
         buttonOpen.ImageScaling = ToolStripItemImageScaling.None;
         buttonOpen.ImageTransparentColor = Color.Magenta;
         buttonOpen.Name = "buttonOpen";
-        buttonOpen.Size = new Size(100, 70);
+        buttonOpen.Size = new Size(100, 60);
         buttonOpen.Text = "Abrir [Ctrl-o]";
         buttonOpen.TextAlign = ContentAlignment.BottomCenter;
         buttonOpen.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -92,7 +92,7 @@ partial class Form1
         buttonSave.ImageScaling = ToolStripItemImageScaling.None;
         buttonSave.ImageTransparentColor = Color.Magenta;
         buttonSave.Name = "buttonSave";
-        buttonSave.Size = new Size(100, 70);
+        buttonSave.Size = new Size(100, 60);
         buttonSave.Text = "Salvar [Ctrl-s]";
         buttonSave.TextAlign = ContentAlignment.BottomCenter;
         buttonSave.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -105,7 +105,7 @@ partial class Form1
         buttonCopy.ImageScaling = ToolStripItemImageScaling.None;
         buttonCopy.ImageTransparentColor = Color.Magenta;
         buttonCopy.Name = "buttonCopy";
-        buttonCopy.Size = new Size(107, 70);
+        buttonCopy.Size = new Size(100, 60);
         buttonCopy.Text = "Copiar [Ctrl-c]";
         buttonCopy.TextAlign = ContentAlignment.BottomCenter;
         buttonCopy.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -118,7 +118,7 @@ partial class Form1
         buttonPaste.ImageScaling = ToolStripItemImageScaling.None;
         buttonPaste.ImageTransparentColor = Color.Magenta;
         buttonPaste.Name = "buttonPaste";
-        buttonPaste.Size = new Size(108, 70);
+        buttonPaste.Size = new Size(100, 60);
         buttonPaste.Text = "Colar [Ctrl-v]";
         buttonPaste.TextAlign = ContentAlignment.BottomCenter;
         buttonPaste.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -131,7 +131,7 @@ partial class Form1
         buttonCut.ImageScaling = ToolStripItemImageScaling.None;
         buttonCut.ImageTransparentColor = Color.Magenta;
         buttonCut.Name = "buttonCut";
-        buttonCut.Size = new Size(115, 70);
+        buttonCut.Size = new Size(100, 60);
         buttonCut.Text = "Recortar [Ctrl-x]";
         buttonCut.TextAlign = ContentAlignment.BottomCenter;
         buttonCut.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -144,7 +144,7 @@ partial class Form1
         buttonCompile.ImageScaling = ToolStripItemImageScaling.None;
         buttonCompile.ImageTransparentColor = Color.Magenta;
         buttonCompile.Name = "buttonCompile";
-        buttonCompile.Size = new Size(108, 70);
+        buttonCompile.Size = new Size(100, 60);
         buttonCompile.Text = "Compilar [F7]";
         buttonCompile.TextAlign = ContentAlignment.BottomCenter;
         buttonCompile.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -157,7 +157,7 @@ partial class Form1
         buttonTeam.ImageScaling = ToolStripItemImageScaling.None;
         buttonTeam.ImageTransparentColor = Color.Magenta;
         buttonTeam.Name = "buttonTeam";
-        buttonTeam.Size = new Size(108, 70);
+        buttonTeam.Size = new Size(100, 60);
         buttonTeam.Text = "Equipe [F1]";
         buttonTeam.TextAlign = ContentAlignment.BottomCenter;
         buttonTeam.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -221,6 +221,7 @@ partial class Form1
         editor.WordWrap = false;
         editor.VScroll += editor_VScroll;
         editor.TextChanged += editor_TextChanged;
+        editor.Layout += editor_Layout;
         // 
         // panelLineNumbers
         // 

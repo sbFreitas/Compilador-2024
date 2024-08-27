@@ -45,6 +45,21 @@ public partial class Form1 : Form
         RegisterHotKey(Handle, HOTKEY_ID_F7, 0, (int)Keys.F7);
         // Registrando F1
         RegisterHotKey(Handle, HOTKEY_ID_F1, 0, (int)Keys.F1);
+
+
+        editor.TextChanged += editor_TextChanged;
+        editor.VScroll += editor_VScroll;
+
+        // Handle the panel's Paint event
+        panelLineNumbers.Paint += panel_Paint;
+
+        // Handle the Layout event to update line numbers after the RichTextBox is fully laid out
+        editor.Layout += editor_VScroll;
+
+        // Trigger line number drawing on form load
+        this.Load += Form1_Load;
+
+
     }
     protected override void WndProc(ref Message m)
     {
@@ -96,27 +111,39 @@ public partial class Form1 : Form
 
     private void editor_TextChanged(object sender, EventArgs e)
     {
-        //panelLineNumbers.Refresh();
+        UpdateLineNumbers();
     }
 
     private void editor_VScroll(object sender, EventArgs e)
     {
-        //panelLineNumbers.Refresh();
+        panelLineNumbers.Invalidate();
+    }
+    private void UpdateLineNumbers()
+    {
+        // Get the first visible line index
+        int firstIndex = editor.GetCharIndexFromPosition(new Point(0, 0));
+        int firstLine = editor.GetLineFromCharIndex(firstIndex);
+
+        // Get the total number of lines in the RichTextBox
+        int totalLines = editor.Lines.Length;
+
+        // Draw the line numbers
+        using (Graphics g = panelLineNumbers.CreateGraphics())
+        {
+            g.Clear(panelLineNumbers.BackColor);
+
+            for (int i = firstLine; i < totalLines; i++)
+            {
+                int y = editor.GetPositionFromCharIndex(editor.GetFirstCharIndexFromLine(i)).Y;
+
+                g.DrawString((i + 1).ToString(), editor.Font, Brushes.Black, new PointF(0, y));
+            }
+        }
     }
 
     private void panel_Paint(object sender, PaintEventArgs e)
     {
-        //TODO: arrumar numeração das linhas
-
-        Font font = editor.Font;
-        int linhaAtual = editor.GetLineFromCharIndex(editor.SelectionStart);
-        int linhasVisiveis = editor.ClientSize.Height / font.Height;
-
-        for (int i = 0; i < linhasVisiveis; i++)
-        {
-            string numeroLinha = (linhaAtual + i + 1).ToString();
-            e.Graphics.DrawString(numeroLinha, font, Brushes.Black, 2, i * font.Height);
-        }
+        UpdateLineNumbers();
     }
 
     //TODO: implementar chamada para as teclas de atalhos
@@ -238,5 +265,8 @@ public partial class Form1 : Form
         messageArea.Text = "Pedro, Marlon e Sara";
     }
 
-
+    private void editor_Layout(object sender, LayoutEventArgs e)
+    {
+        UpdateLineNumbers();
+    }
 }
