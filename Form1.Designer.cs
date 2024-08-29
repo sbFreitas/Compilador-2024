@@ -43,7 +43,7 @@ partial class Form1
         statusBar = new StatusStrip();
         statusBarLabel = new ToolStripStatusLabel();
         editor = new RichTextBox();
-        panel = new Panel();
+        panelLineNumbers = new Panel();
         toolbar.SuspendLayout();
         statusBar.SuspendLayout();
         SuspendLayout();
@@ -53,8 +53,9 @@ partial class Form1
         toolbar.ImageScalingSize = new Size(20, 20);
         toolbar.Items.AddRange(new ToolStripItem[] { buttonNew, buttonOpen, buttonSave, buttonCopy, buttonPaste, buttonCut, buttonCompile, buttonTeam });
         toolbar.Location = new Point(0, 0);
+        toolbar.MinimumSize = new Size(900, 70);
         toolbar.Name = "toolbar";
-        toolbar.Size = new Size(900, 73);
+        toolbar.Size = new Size(900, 70);
         toolbar.TabIndex = 0;
         toolbar.Text = "toolStrip1";
         // 
@@ -65,11 +66,11 @@ partial class Form1
         buttonNew.ImageScaling = ToolStripItemImageScaling.None;
         buttonNew.ImageTransparentColor = Color.Magenta;
         buttonNew.Name = "buttonNew";
-        buttonNew.Size = new Size(100, 70);
+        buttonNew.Size = new Size(108, 60);
         buttonNew.Text = "Novo [Ctrl-n]";
         buttonNew.TextAlign = ContentAlignment.BottomCenter;
         buttonNew.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonNew.Click += buttonNew_Click;
+        buttonNew.Click += ButtonNew_Click;
         // 
         // buttonOpen
         // 
@@ -78,11 +79,11 @@ partial class Form1
         buttonOpen.ImageScaling = ToolStripItemImageScaling.None;
         buttonOpen.ImageTransparentColor = Color.Magenta;
         buttonOpen.Name = "buttonOpen";
-        buttonOpen.Size = new Size(100, 70);
+        buttonOpen.Size = new Size(108, 60);
         buttonOpen.Text = "Abrir [Ctrl-o]";
         buttonOpen.TextAlign = ContentAlignment.BottomCenter;
         buttonOpen.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonOpen.Click += buttonOpen_Click;
+        buttonOpen.Click += ButtonOpen_Click;
         // 
         // buttonSave
         // 
@@ -91,11 +92,11 @@ partial class Form1
         buttonSave.ImageScaling = ToolStripItemImageScaling.None;
         buttonSave.ImageTransparentColor = Color.Magenta;
         buttonSave.Name = "buttonSave";
-        buttonSave.Size = new Size(100, 70);
+        buttonSave.Size = new Size(108, 60);
         buttonSave.Text = "Salvar [Ctrl-s]";
         buttonSave.TextAlign = ContentAlignment.BottomCenter;
         buttonSave.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonSave.Click += buttonSave_Click;
+        buttonSave.Click += ButtonSave_Click;
         // 
         // buttonCopy
         // 
@@ -104,11 +105,11 @@ partial class Form1
         buttonCopy.ImageScaling = ToolStripItemImageScaling.None;
         buttonCopy.ImageTransparentColor = Color.Magenta;
         buttonCopy.Name = "buttonCopy";
-        buttonCopy.Size = new Size(107, 70);
+        buttonCopy.Size = new Size(108, 60);
         buttonCopy.Text = "Copiar [Ctrl-c]";
         buttonCopy.TextAlign = ContentAlignment.BottomCenter;
         buttonCopy.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonCopy.Click += buttonCopy_Click;
+        buttonCopy.Click += ButtonCopy_Click;
         // 
         // buttonPaste
         // 
@@ -117,11 +118,11 @@ partial class Form1
         buttonPaste.ImageScaling = ToolStripItemImageScaling.None;
         buttonPaste.ImageTransparentColor = Color.Magenta;
         buttonPaste.Name = "buttonPaste";
-        buttonPaste.Size = new Size(108, 70);
+        buttonPaste.Size = new Size(108, 60);
         buttonPaste.Text = "Colar [Ctrl-v]";
         buttonPaste.TextAlign = ContentAlignment.BottomCenter;
         buttonPaste.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonPaste.Click += buttonPaste_Click;
+        buttonPaste.Click += ButtonPaste_Click;
         // 
         // buttonCut
         // 
@@ -130,11 +131,11 @@ partial class Form1
         buttonCut.ImageScaling = ToolStripItemImageScaling.None;
         buttonCut.ImageTransparentColor = Color.Magenta;
         buttonCut.Name = "buttonCut";
-        buttonCut.Size = new Size(115, 70);
+        buttonCut.Size = new Size(109, 60);
         buttonCut.Text = "Recortar [Ctrl-x]";
         buttonCut.TextAlign = ContentAlignment.BottomCenter;
         buttonCut.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonCut.Click += buttonCut_Click;
+        buttonCut.Click += ButtonCut_Click;
         // 
         // buttonCompile
         // 
@@ -143,11 +144,11 @@ partial class Form1
         buttonCompile.ImageScaling = ToolStripItemImageScaling.None;
         buttonCompile.ImageTransparentColor = Color.Magenta;
         buttonCompile.Name = "buttonCompile";
-        buttonCompile.Size = new Size(108, 70);
+        buttonCompile.Size = new Size(108, 60);
         buttonCompile.Text = "Compilar [F7]";
         buttonCompile.TextAlign = ContentAlignment.BottomCenter;
         buttonCompile.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonCompile.Click += buttonCompile_Click;
+        buttonCompile.Click += ButtonCompile_Click;
         // 
         // buttonTeam
         // 
@@ -156,73 +157,80 @@ partial class Form1
         buttonTeam.ImageScaling = ToolStripItemImageScaling.None;
         buttonTeam.ImageTransparentColor = Color.Magenta;
         buttonTeam.Name = "buttonTeam";
-        buttonTeam.Size = new Size(108, 70);
+        buttonTeam.Size = new Size(108, 60);
         buttonTeam.Text = "Equipe [F1]";
         buttonTeam.TextAlign = ContentAlignment.BottomCenter;
         buttonTeam.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonTeam.Click += buttonTeam_Click;
+        buttonTeam.Click += ButtonTeam_Click;
         // 
         // splitter
         // 
+        splitter.BackColor = Color.LightGray;
         splitter.Dock = DockStyle.Bottom;
         splitter.Location = new Point(0, 368);
         splitter.Name = "splitter";
-        splitter.Size = new Size(900, 10);
+        splitter.Size = new Size(900, 11);
         splitter.TabIndex = 2;
         splitter.TabStop = false;
         // 
         // messageArea
         // 
+        messageArea.BackColor = Color.WhiteSmoke;
         messageArea.BorderStyle = BorderStyle.None;
         messageArea.Dock = DockStyle.Bottom;
         messageArea.Enabled = false;
-        messageArea.Location = new Point(0, 378);
+        messageArea.Location = new Point(0, 379);
         messageArea.Multiline = true;
         messageArea.Name = "messageArea";
         messageArea.ReadOnly = true;
         messageArea.ScrollBars = ScrollBars.Both;
         messageArea.Size = new Size(900, 196);
         messageArea.TabIndex = 3;
+        messageArea.WordWrap = false;
         // 
         // statusBar
         // 
         statusBar.AutoSize = false;
+        statusBar.BackColor = SystemColors.Info;
         statusBar.ImageScalingSize = new Size(20, 20);
         statusBar.Items.AddRange(new ToolStripItem[] { statusBarLabel });
-        statusBar.Location = new Point(0, 574);
+        statusBar.Location = new Point(0, 575);
         statusBar.Name = "statusBar";
-        statusBar.Size = new Size(900, 26);
+        statusBar.Size = new Size(900, 25);
         statusBar.TabIndex = 4;
         statusBar.Text = "statusBar";
         // 
         // statusBarLabel
         // 
         statusBarLabel.Name = "statusBarLabel";
-        statusBarLabel.Size = new Size(0, 20);
+        statusBarLabel.Size = new Size(0, 19);
         // 
         // editor
         // 
         editor.AcceptsTab = true;
         editor.BorderStyle = BorderStyle.None;
         editor.Dock = DockStyle.Fill;
-        editor.Location = new Point(28, 73);
+        editor.Location = new Point(27, 70);
         editor.Name = "editor";
-        editor.Size = new Size(872, 295);
+        editor.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
+        editor.Size = new Size(873, 298);
         editor.TabIndex = 0;
         editor.Text = "";
         editor.WordWrap = false;
-        editor.VScroll += RichTextBox1_VScroll;
-        editor.TextChanged += richTextBox1_TextChanged;
+        editor.VScroll += Editor_VScroll;
+        editor.TextChanged += Editor_TextChanged;
+        editor.Layout += Editor_Layout;
         // 
-        // panel
+        // panelLineNumbers
         // 
-        panel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-        panel.Dock = DockStyle.Left;
-        panel.Location = new Point(0, 73);
-        panel.Name = "panel";
-        panel.Size = new Size(28, 295);
-        panel.TabIndex = 6;
-        panel.Paint += panel_Paint;
+        panelLineNumbers.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        panelLineNumbers.BackColor = SystemColors.Info;
+        panelLineNumbers.Dock = DockStyle.Left;
+        panelLineNumbers.Location = new Point(0, 70);
+        panelLineNumbers.Name = "panelLineNumbers";
+        panelLineNumbers.Size = new Size(27, 298);
+        panelLineNumbers.TabIndex = 6;
+        panelLineNumbers.Paint += Panel_Paint;
         // 
         // Form1
         // 
@@ -231,11 +239,11 @@ partial class Form1
         AutoSizeMode = AutoSizeMode.GrowAndShrink;
         ClientSize = new Size(900, 600);
         Controls.Add(editor);
-        Controls.Add(panel);
+        Controls.Add(panelLineNumbers);
         Controls.Add(splitter);
         Controls.Add(messageArea);
-        Controls.Add(statusBar);
         Controls.Add(toolbar);
+        Controls.Add(statusBar);
         MinimumSize = new Size(910, 600);
         Name = "Form1";
         Text = "Compilador";
@@ -264,5 +272,5 @@ partial class Form1
     private StatusStrip statusBar;
     private ToolStripStatusLabel statusBarLabel;
     private RichTextBox editor;
-    private Panel panel;
+    private Panel panelLineNumbers;
 }
