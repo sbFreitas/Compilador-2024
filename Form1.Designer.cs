@@ -108,7 +108,7 @@ partial class Form1
         buttonCopy.Text = "Copiar [Ctrl-c]";
         buttonCopy.TextAlign = ContentAlignment.BottomCenter;
         buttonCopy.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonCopy.Click += buttonCopy_Click;
+        buttonCopy.Click += ButtonCopy_Click;
         // 
         // buttonPaste
         // 
@@ -121,7 +121,7 @@ partial class Form1
         buttonPaste.Text = "Colar [Ctrl-v]";
         buttonPaste.TextAlign = ContentAlignment.BottomCenter;
         buttonPaste.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonPaste.Click += buttonPaste_Click;
+        buttonPaste.Click += ButtonPaste_Click;
         // 
         // buttonCut
         // 
@@ -134,7 +134,7 @@ partial class Form1
         buttonCut.Text = "Recortar [Ctrl-x]";
         buttonCut.TextAlign = ContentAlignment.BottomCenter;
         buttonCut.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonCut.Click += buttonCut_Click;
+        buttonCut.Click += ButtonCut_Click;
         // 
         // buttonCompile
         // 

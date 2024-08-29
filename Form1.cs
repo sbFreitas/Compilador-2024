@@ -64,13 +64,13 @@ public partial class Form1 : Form
             buttonSave_Click(sender, e);
 
         else if (e.Control && e.KeyCode == Keys.C)
-            throw new NotImplementedException();    //TODO: criar método para copiar
+            ButtonCopy_Click(sender, e);    //TODO: criar método para copiar
 
         else if (e.Control && e.KeyCode == Keys.V)
-            throw new NotImplementedException();    //TODO: criar método para colar
+            ButtonPaste_Click(sender, e);    //TODO: criar método para colar
 
         else if (e.Control && e.KeyCode == Keys.X)
-            throw new NotImplementedException();    //TODO: criar método para cortar
+            ButtonCut_Click(sender, e);    //TODO: criar método para cortar
 
         else if (e.KeyCode == Keys.F7)
             throw new NotImplementedException();    //TODO: criar método para compilar
@@ -143,19 +143,28 @@ public partial class Form1 : Form
         }
     }
 
-    private void buttonCopy_Click(object sender, EventArgs e)
+    private void ButtonCopy_Click(object sender, EventArgs e)
     {
-
+        if (editor.SelectedText != "")
+        {
+            editor.Copy(); // Copia o texto selecionado para a área de transferência
+        }
     }
 
-    private void buttonPaste_Click(object sender, EventArgs e)
+    private void ButtonPaste_Click(object sender, EventArgs e)
     {
-
+        if (Clipboard.ContainsText())
+        {
+            editor.Paste(); // Cola o texto da área de transferência no editor
+        }
     }
 
-    private void buttonCut_Click(object sender, EventArgs e)
+    private void ButtonCut_Click(object sender, EventArgs e)
     {
-
+        if (editor.SelectedText != "")
+        {
+            editor.Cut(); // Corta o texto selecionado e o coloca na área de transferência
+        }
     }
 
     private void buttonCompile_Click(object sender, EventArgs e)
