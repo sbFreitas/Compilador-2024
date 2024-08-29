@@ -47,14 +47,14 @@ public partial class Form1 : Form
         RegisterHotKey(Handle, HOTKEY_ID_F1, 0, (int)Keys.F1);
 
 
-        editor.TextChanged += editor_TextChanged;
-        editor.VScroll += editor_VScroll;
+        editor.TextChanged += Editor_TextChanged;
+        editor.VScroll += Editor_VScroll;
 
         // Handle the panel's Paint event
-        panelLineNumbers.Paint += panel_Paint;
+        panelLineNumbers.Paint += Panel_Paint;
 
         // Handle the Layout event to update line numbers after the RichTextBox is fully laid out
-        editor.Layout += editor_VScroll;
+        editor.Layout += Editor_VScroll;
 
         // Trigger line number drawing on form load
         this.Load += Form1_Load;
@@ -70,34 +70,34 @@ public partial class Form1 : Form
             if (id == HOTKEY_ID_CTRL_N)
             {
                 // Handle CTRL + N hotkey
-                buttonNew_Click(this, EventArgs.Empty);
+                ButtonNew_Click(this, EventArgs.Empty);
             }
             else if (id == HOTKEY_ID_CTRL_O)
             {
                 // Handle CTRL + O hotkey
-                buttonOpen_Click(this, EventArgs.Empty);
+                ButtonOpen_Click(this, EventArgs.Empty);
             }
             if (id == HOTKEY_ID_CTRL_S)
             {
                 // Handle CTRL + S hotkey
-                buttonSave_Click(this, EventArgs.Empty);
+                ButtonSave_Click(this, EventArgs.Empty);
             }
             else if (id == HOTKEY_ID_F7)
             {
                 // Handle F7 hotkey
-                buttonCompile_Click(this, EventArgs.Empty);
+                ButtonCompile_Click(this, EventArgs.Empty);
             }
             else if (id == HOTKEY_ID_F1)
             {
                 // Handle F7 hotkey
-                buttonTeam_Click(this, EventArgs.Empty);
+                ButtonTeam_Click(this, EventArgs.Empty);
             }
         }
 
         base.WndProc(ref m);
     }
 
-    private void Form1_Load(object sender, EventArgs e)
+    private void Form1_Load(object? sender, EventArgs e)
     {
 
     }
@@ -109,12 +109,12 @@ public partial class Form1 : Form
         statusBarLabel.Text = "";
     }
 
-    private void editor_TextChanged(object sender, EventArgs e)
+    private void Editor_TextChanged(object? sender, EventArgs e)
     {
         UpdateLineNumbers();
     }
 
-    private void editor_VScroll(object sender, EventArgs e)
+    private void Editor_VScroll(object? sender, EventArgs e)
     {
         panelLineNumbers.Invalidate();
     }
@@ -141,45 +141,17 @@ public partial class Form1 : Form
         }
     }
 
-    private void panel_Paint(object sender, PaintEventArgs e)
+    private void Panel_Paint(object? sender, PaintEventArgs e)
     {
         UpdateLineNumbers();
     }
 
-    //TODO: implementar chamada para as teclas de atalhos
-    private void button_KeyDown(object? sender, KeyEventArgs e)
-    {
-        if (e.Control)
-            buttonNew_Click(sender, e);
-
-        else if (e.Control)
-            buttonOpen_Click(sender, e);
-
-        else if (e.Control)
-            buttonSave_Click(sender, e);
-
-        else if (e.Control && e.KeyCode == Keys.C)
-            throw new NotImplementedException();    //TODO: criar método para copiar
-
-        else if (e.Control && e.KeyCode == Keys.V)
-            throw new NotImplementedException();    //TODO: criar método para colar
-
-        else if (e.Control && e.KeyCode == Keys.X)
-            throw new NotImplementedException();    //TODO: criar método para cortar
-
-        else if (e.KeyCode == Keys.F7)
-            throw new NotImplementedException();    //TODO: criar método para compilar
-
-        else if (e.KeyCode == Keys.F1)
-            throw new NotImplementedException();    //TODO: criar método para mostrar equipe
-    }
-
-    private void buttonNew_Click(object sender, EventArgs e)
+    private void ButtonNew_Click(object? sender, EventArgs e)
     {
         ClearAll();
     }
 
-    private void buttonOpen_Click(object sender, EventArgs e)
+    private void ButtonOpen_Click(object? sender, EventArgs e)
     {
         OpenFileDialog openFileDialog = new OpenFileDialog();
         openFileDialog.Filter = "Arquivos de Texto (*.txt)|*.txt|Todos os arquivos (*.*)|*.*";
@@ -199,7 +171,7 @@ public partial class Form1 : Form
         }
     }
 
-    private void buttonSave_Click(object sender, EventArgs e)
+    private void ButtonSave_Click(object? sender, EventArgs e)
     {
         if (newFile && path == "")
         {
@@ -238,34 +210,34 @@ public partial class Form1 : Form
         }
     }
 
-    private void buttonCopy_Click(object sender, EventArgs e)
+    private void ButtonCopy_Click(object? sender, EventArgs e)
     {
 
     }
 
-    private void buttonPaste_Click(object sender, EventArgs e)
+    private void ButtonPaste_Click(object? sender, EventArgs e)
     {
 
     }
 
-    private void buttonCut_Click(object sender, EventArgs e)
+    private void ButtonCut_Click(object? sender, EventArgs e)
     {
 
     }
 
-    private void buttonCompile_Click(object sender, EventArgs e)
+    private void ButtonCompile_Click(object? sender, EventArgs e)
     {
         messageArea.Clear();
         messageArea.Text = "compilação de programas ainda não foi implementada";
     }
 
-    private void buttonTeam_Click(object sender, EventArgs e)
+    private void ButtonTeam_Click(object? sender, EventArgs e)
     {
         messageArea.Clear();
-        messageArea.Text = "Pedro, Marlon e Sara";
+        messageArea.Text = "Pedro, Marlon e Sarah";
     }
 
-    private void editor_Layout(object sender, LayoutEventArgs e)
+    private void Editor_Layout(object? sender, LayoutEventArgs e)
     {
         UpdateLineNumbers();
     }

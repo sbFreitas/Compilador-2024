@@ -66,11 +66,11 @@ partial class Form1
         buttonNew.ImageScaling = ToolStripItemImageScaling.None;
         buttonNew.ImageTransparentColor = Color.Magenta;
         buttonNew.Name = "buttonNew";
-        buttonNew.Size = new Size(100, 60);
+        buttonNew.Size = new Size(108, 60);
         buttonNew.Text = "Novo [Ctrl-n]";
         buttonNew.TextAlign = ContentAlignment.BottomCenter;
         buttonNew.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonNew.Click += buttonNew_Click;
+        buttonNew.Click += ButtonNew_Click;
         // 
         // buttonOpen
         // 
@@ -79,11 +79,11 @@ partial class Form1
         buttonOpen.ImageScaling = ToolStripItemImageScaling.None;
         buttonOpen.ImageTransparentColor = Color.Magenta;
         buttonOpen.Name = "buttonOpen";
-        buttonOpen.Size = new Size(100, 60);
+        buttonOpen.Size = new Size(108, 60);
         buttonOpen.Text = "Abrir [Ctrl-o]";
         buttonOpen.TextAlign = ContentAlignment.BottomCenter;
         buttonOpen.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonOpen.Click += buttonOpen_Click;
+        buttonOpen.Click += ButtonOpen_Click;
         // 
         // buttonSave
         // 
@@ -92,11 +92,11 @@ partial class Form1
         buttonSave.ImageScaling = ToolStripItemImageScaling.None;
         buttonSave.ImageTransparentColor = Color.Magenta;
         buttonSave.Name = "buttonSave";
-        buttonSave.Size = new Size(100, 60);
+        buttonSave.Size = new Size(108, 60);
         buttonSave.Text = "Salvar [Ctrl-s]";
         buttonSave.TextAlign = ContentAlignment.BottomCenter;
         buttonSave.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonSave.Click += buttonSave_Click;
+        buttonSave.Click += ButtonSave_Click;
         // 
         // buttonCopy
         // 
@@ -105,11 +105,11 @@ partial class Form1
         buttonCopy.ImageScaling = ToolStripItemImageScaling.None;
         buttonCopy.ImageTransparentColor = Color.Magenta;
         buttonCopy.Name = "buttonCopy";
-        buttonCopy.Size = new Size(100, 60);
+        buttonCopy.Size = new Size(108, 60);
         buttonCopy.Text = "Copiar [Ctrl-c]";
         buttonCopy.TextAlign = ContentAlignment.BottomCenter;
         buttonCopy.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonCopy.Click += buttonCopy_Click;
+        buttonCopy.Click += ButtonCopy_Click;
         // 
         // buttonPaste
         // 
@@ -118,11 +118,11 @@ partial class Form1
         buttonPaste.ImageScaling = ToolStripItemImageScaling.None;
         buttonPaste.ImageTransparentColor = Color.Magenta;
         buttonPaste.Name = "buttonPaste";
-        buttonPaste.Size = new Size(100, 60);
+        buttonPaste.Size = new Size(108, 60);
         buttonPaste.Text = "Colar [Ctrl-v]";
         buttonPaste.TextAlign = ContentAlignment.BottomCenter;
         buttonPaste.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonPaste.Click += buttonPaste_Click;
+        buttonPaste.Click += ButtonPaste_Click;
         // 
         // buttonCut
         // 
@@ -131,11 +131,11 @@ partial class Form1
         buttonCut.ImageScaling = ToolStripItemImageScaling.None;
         buttonCut.ImageTransparentColor = Color.Magenta;
         buttonCut.Name = "buttonCut";
-        buttonCut.Size = new Size(100, 60);
+        buttonCut.Size = new Size(109, 60);
         buttonCut.Text = "Recortar [Ctrl-x]";
         buttonCut.TextAlign = ContentAlignment.BottomCenter;
         buttonCut.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonCut.Click += buttonCut_Click;
+        buttonCut.Click += ButtonCut_Click;
         // 
         // buttonCompile
         // 
@@ -144,11 +144,11 @@ partial class Form1
         buttonCompile.ImageScaling = ToolStripItemImageScaling.None;
         buttonCompile.ImageTransparentColor = Color.Magenta;
         buttonCompile.Name = "buttonCompile";
-        buttonCompile.Size = new Size(100, 60);
+        buttonCompile.Size = new Size(108, 60);
         buttonCompile.Text = "Compilar [F7]";
         buttonCompile.TextAlign = ContentAlignment.BottomCenter;
         buttonCompile.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonCompile.Click += buttonCompile_Click;
+        buttonCompile.Click += ButtonCompile_Click;
         // 
         // buttonTeam
         // 
@@ -157,20 +157,19 @@ partial class Form1
         buttonTeam.ImageScaling = ToolStripItemImageScaling.None;
         buttonTeam.ImageTransparentColor = Color.Magenta;
         buttonTeam.Name = "buttonTeam";
-        buttonTeam.Size = new Size(100, 60);
+        buttonTeam.Size = new Size(108, 60);
         buttonTeam.Text = "Equipe [F1]";
         buttonTeam.TextAlign = ContentAlignment.BottomCenter;
         buttonTeam.TextImageRelation = TextImageRelation.ImageAboveText;
-        buttonTeam.Click += buttonTeam_Click;
+        buttonTeam.Click += ButtonTeam_Click;
         // 
         // splitter
         // 
         splitter.BackColor = Color.LightGray;
         splitter.Dock = DockStyle.Bottom;
-        splitter.Location = new Point(0, 386);
-        splitter.Margin = new Padding(3, 2, 3, 2);
+        splitter.Location = new Point(0, 368);
         splitter.Name = "splitter";
-        splitter.Size = new Size(894, 8);
+        splitter.Size = new Size(900, 11);
         splitter.TabIndex = 2;
         splitter.TabStop = false;
         // 
@@ -180,14 +179,14 @@ partial class Form1
         messageArea.BorderStyle = BorderStyle.None;
         messageArea.Dock = DockStyle.Bottom;
         messageArea.Enabled = false;
-        messageArea.Location = new Point(0, 394);
-        messageArea.Margin = new Padding(3, 2, 3, 2);
+        messageArea.Location = new Point(0, 379);
         messageArea.Multiline = true;
         messageArea.Name = "messageArea";
         messageArea.ReadOnly = true;
         messageArea.ScrollBars = ScrollBars.Both;
-        messageArea.Size = new Size(894, 147);
+        messageArea.Size = new Size(900, 196);
         messageArea.TabIndex = 3;
+        messageArea.WordWrap = false;
         // 
         // statusBar
         // 
@@ -195,33 +194,32 @@ partial class Form1
         statusBar.BackColor = SystemColors.Info;
         statusBar.ImageScalingSize = new Size(20, 20);
         statusBar.Items.AddRange(new ToolStripItem[] { statusBarLabel });
-        statusBar.Location = new Point(0, 541);
+        statusBar.Location = new Point(0, 575);
         statusBar.Name = "statusBar";
-        statusBar.Padding = new Padding(1, 0, 12, 0);
-        statusBar.Size = new Size(894, 20);
+        statusBar.Size = new Size(900, 25);
         statusBar.TabIndex = 4;
         statusBar.Text = "statusBar";
         // 
         // statusBarLabel
         // 
         statusBarLabel.Name = "statusBarLabel";
-        statusBarLabel.Size = new Size(0, 15);
+        statusBarLabel.Size = new Size(0, 19);
         // 
         // editor
         // 
         editor.AcceptsTab = true;
         editor.BorderStyle = BorderStyle.None;
         editor.Dock = DockStyle.Fill;
-        editor.Location = new Point(24, 70);
-        editor.Margin = new Padding(3, 2, 3, 2);
+        editor.Location = new Point(27, 70);
         editor.Name = "editor";
-        editor.Size = new Size(870, 316);
+        editor.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
+        editor.Size = new Size(873, 298);
         editor.TabIndex = 0;
         editor.Text = "";
         editor.WordWrap = false;
-        editor.VScroll += editor_VScroll;
-        editor.TextChanged += editor_TextChanged;
-        editor.Layout += editor_Layout;
+        editor.VScroll += Editor_VScroll;
+        editor.TextChanged += Editor_TextChanged;
+        editor.Layout += Editor_Layout;
         // 
         // panelLineNumbers
         // 
@@ -229,25 +227,23 @@ partial class Form1
         panelLineNumbers.BackColor = SystemColors.Info;
         panelLineNumbers.Dock = DockStyle.Left;
         panelLineNumbers.Location = new Point(0, 70);
-        panelLineNumbers.Margin = new Padding(3, 2, 3, 2);
         panelLineNumbers.Name = "panelLineNumbers";
-        panelLineNumbers.Size = new Size(24, 316);
+        panelLineNumbers.Size = new Size(27, 298);
         panelLineNumbers.TabIndex = 6;
-        panelLineNumbers.Paint += panel_Paint;
+        panelLineNumbers.Paint += Panel_Paint;
         // 
         // Form1
         // 
-        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         AutoSizeMode = AutoSizeMode.GrowAndShrink;
-        ClientSize = new Size(894, 561);
+        ClientSize = new Size(900, 600);
         Controls.Add(editor);
         Controls.Add(panelLineNumbers);
         Controls.Add(splitter);
         Controls.Add(messageArea);
-        Controls.Add(statusBar);
         Controls.Add(toolbar);
-        Margin = new Padding(3, 2, 3, 2);
+        Controls.Add(statusBar);
         MinimumSize = new Size(910, 600);
         Name = "Form1";
         Text = "Compilador";
