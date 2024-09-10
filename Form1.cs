@@ -161,6 +161,8 @@ public partial class Form1 : Form
         {
             g.Clear(panelLineNumbers.BackColor);
 
+            g.DrawString((firstLine + 1).ToString(), editor.Font, Brushes.Black, new PointF(0, 0));
+
             for (int i = firstLine; i < totalLines; i++)
             {
                 int y = editor.GetPositionFromCharIndex(editor.GetFirstCharIndexFromLine(i)).Y;
@@ -241,43 +243,74 @@ public partial class Form1 : Form
     }
 
     private void ButtonCopy_Click(object? sender, EventArgs e)
+    {
+        if (editor.SelectedText != "")
         {
-            if (editor.SelectedText != "")
-            {
-                editor.Copy(); // Copia o texto selecionado para a área de transferência
-            }
-        }
-
-        private void ButtonPaste_Click(object? sender, EventArgs e)
-        {
-            if (Clipboard.ContainsText())
-            {
-                editor.Paste(); // Cola o texto da área de transferência no editor
-            }
-        }
-
-        private void ButtonCut_Click(object? sender, EventArgs e)
-        {
-            if (editor.SelectedText != "")
-            {
-                editor.Cut(); // Corta o texto selecionado e o coloca na área de transferência
-            }
-        }
-
-        private void ButtonCompile_Click(object? sender, EventArgs e)
-        {
-            messageArea.Clear();
-            messageArea.Text = "compilação de programas ainda não foi implementada";
-        }
-
-        private void ButtonTeam_Click(object? sender, EventArgs e)
-        {
-            messageArea.Clear();
-            messageArea.Text = "Pedro, Marlon e Sarah";
-        }
-
-        private void Editor_Layout(object? sender, LayoutEventArgs e)
-        {
-            UpdateLineNumbers();
+            editor.Copy(); // Copia o texto selecionado para a área de transferência
         }
     }
+
+    private void ButtonPaste_Click(object? sender, EventArgs e)
+    {
+        if (Clipboard.ContainsText())
+        {
+            editor.Paste(); // Cola o texto da área de transferência no editor
+        }
+    }
+
+    private void ButtonCut_Click(object? sender, EventArgs e)
+    {
+        if (editor.SelectedText != "")
+        {
+            editor.Cut(); // Corta o texto selecionado e o coloca na área de transferência
+        }
+    }
+
+    private void ButtonCompile_Click(object? sender, EventArgs e)
+    {
+        messageArea.Clear();
+        messageArea.Text = "compilação de programas ainda não foi implementada";
+
+        Lexico lexico = new Lexico();
+        lexico.setInput( /* texto do editor de textos */ );
+        try
+        {
+            Token t = null;
+            while ((t = lexico.nextToken()) != null)
+            {
+                System.out.println(t.getLexeme());
+
+                // só escreve o lexema, necessário escrever t.getId, t.getPosition()
+
+                // t.getId () - retorna o identificador da classe. Olhar Constants.java e adaptar, pois 
+                // deve ser apresentada a classe por extenso
+                // t.getPosition () - retorna a posição inicial do lexema no editor, necessário adaptar 
+                // para mostrar a linha	
+
+                // esse código apresenta os tokens enquanto não ocorrer erro
+                // no entanto, os tokens devem ser apresentados SÓ se não ocorrer erro, necessário adaptar 
+                // para atender o que foi solicitado		   
+            }
+        }
+        catch (LexicalError e)
+        {  // tratamento de erros
+            System.out.println(e.getMessage() + " em " + e.getPosition());
+
+            // e.getMessage() - retorna a mensagem de erro de SCANNER_ERRO (olhar ScannerConstants.java 
+            // e adaptar conforme o enunciado da parte 2)
+            // e.getPosition() - retorna a posição inicial do erro, tem que adaptar para mostrar a 
+            // linha  
+        }
+    }
+
+    private void ButtonTeam_Click(object? sender, EventArgs e)
+    {
+        messageArea.Clear();
+        messageArea.Text = "Pedro, Marlon e Sarah";
+    }
+
+    private void Editor_Layout(object? sender, LayoutEventArgs e)
+    {
+        UpdateLineNumbers();
+    }
+}
