@@ -269,32 +269,42 @@ public partial class Form1 : Form
     private void ButtonCompile_Click(object? sender, EventArgs e)
     {
         messageArea.Clear();
-        messageArea.Text = "compilação de programas ainda não foi implementada";
+        //messageArea.Text = "compilação de programas ainda não foi implementada";
 
         Lexico lexico = new Lexico();
-        lexico.setInput( /* texto do editor de textos */ );
+        string editorText = editor.Text;
+        lexico.setInput(new StringReader(editorText));
         try
         {
-            Token t = null;
+            Token? t = null;
             while ((t = lexico.nextToken()) != null)
             {
-                System.out.println(t.getLexeme());
+                messageArea.Text += t.getLexeme();
 
                 // só escreve o lexema, necessário escrever t.getId, t.getPosition()
 
                 // t.getId () - retorna o identificador da classe. Olhar Constants.java e adaptar, pois 
                 // deve ser apresentada a classe por extenso
+                string tokenClass = GetTokenClassById(t.getId());
+                messageArea.Text += $" Classe do token: {tokenClass} ";
+
                 // t.getPosition () - retorna a posição inicial do lexema no editor, necessário adaptar 
                 // para mostrar a linha	
+                int line = GetLineFromPosition(t.getPosition());
+                messageArea.Text += $"Posição: linha {line}\n";
 
                 // esse código apresenta os tokens enquanto não ocorrer erro
                 // no entanto, os tokens devem ser apresentados SÓ se não ocorrer erro, necessário adaptar 
-                // para atender o que foi solicitado		   
+                // para atender o que foi solicitado
+
             }
+
+            messageArea.Text += "Programa compilado com sucesso\n";
         }
-        catch (LexicalError e)
+
+        catch (LexicalError error)
         {  // tratamento de erros
-            System.out.println(e.getMessage() + " em " + e.getPosition());
+            messageArea.Text = error.Message + " em " + GetLineFromPosition(error.getPosition());
 
             // e.getMessage() - retorna a mensagem de erro de SCANNER_ERRO (olhar ScannerConstants.java 
             // e adaptar conforme o enunciado da parte 2)
@@ -312,5 +322,28 @@ public partial class Form1 : Form
     private void Editor_Layout(object? sender, LayoutEventArgs e)
     {
         UpdateLineNumbers();
+    }
+
+    private static string GetTokenClassById(int id)
+    {
+        switch(id) 
+        {
+            case 2: return "Identificador";
+            case 3: return "Constante_int";
+            case 4: return "Constante_float";
+            case 5: return "Constante_string";
+            case 6: return "Palavra";
+            case int i when (i >= 7 && i <= 19): return "Palavra reservadda";
+            case int i when (i >= 20 && i <= 35): return "Símbolo Especial";
+            default: return "Desconhecido";
+        }
+    }
+
+    private int GetLineFromPosition(int position)
+    {
+        Point pos = editor.GetPositionFromCharIndex(position);
+        int line = editor.GetLineFromCharIndex(editor.GetCharIndexFromPosition(pos));
+
+        return line + 1;
     }
 }

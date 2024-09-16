@@ -178,7 +178,6 @@ partial class Form1
         messageArea.BackColor = Color.WhiteSmoke;
         messageArea.BorderStyle = BorderStyle.None;
         messageArea.Dock = DockStyle.Bottom;
-        messageArea.Enabled = false;
         messageArea.Location = new Point(0, 379);
         messageArea.Multiline = true;
         messageArea.Name = "messageArea";

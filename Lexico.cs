@@ -13,34 +13,34 @@ namespace appCompilador
     public class Lexico : Constants
     {
         private int position;
-        private String input;
+        private string input;
 
         public Lexico()
         {
-            this(new java.io.StringReader(""));
+            new StringReader("");
         }
 
-        public Lexico(java.io.Reader input)
+        public Lexico(TextReader input)
         {
             setInput(input);
         }
 
-        public void setInput(java.io.Reader input)
+        public void setInput(TextReader input)
         {
-            StringBuffer bfr = new StringBuffer();
+            StringBuilder bfr = new StringBuilder();
             try
             {
-                int c = input.read();
+                int c = input.Read();
                 while (c != -1)
                 {
-                    bfr.append((char)c);
-                    c = input.read();
+                    bfr.Append((char)c);
+                    c = input.Read();
                 }
-                this.input = bfr.toString();
+                this.input = bfr.ToString();
             }
-            catch (java.io.IOException e)
+            catch (IOException e)
             {
-                e.printStackTrace();
+                Console.WriteLine(e.StackTrace);
             }
 
             setPosition(0);
@@ -51,66 +51,70 @@ namespace appCompilador
             position = pos;
         }
 
-        //public Token nextToken() throws LexicalError
-        //{
-        //    if ( ! hasInput() )
-        //        return null;
+        public Token nextToken() //throws LexicalError
+        {
+            if (!hasInput())
+                return null;
 
-        //    int start = position;
+            int start = position;
 
-        //    int state = 0;
-        //    int lastState = 0;
-        //    int endState = -1;
-        //    int end = -1;
+            int state = 0;
+            int lastSate = 0;
+            int endEstate = -1;
+            int end = -1;
 
-        //    while (hasInput())
-        //    {
-        //        lastState = state;
-        //        state = nextState(nextChar(), state);
+            while(hasInput())
+            {
+                lastSate = state;
+                state = nextState(nextChar(), state);
 
-        //        if (state< 0)
-        //            break;
+                if (state < 0)
+                    break;
 
-        //        else
-        //        {
-        //            if (tokenForState(state) >= 0)
-        //            {
-        //                endState = state;
-        //                end = position;
-        //            }
-        //        }
-        //    }
-        //    if (endState < 0 || (endState != state && tokenForState(lastState) == -2))
-        //        throw new LexicalError(SCANNER_ERROR[lastState], start);
+                else
+                {
+                    if(tokenForState(state) >= 0)
+                    {
+                        endEstate = state;
+                        end = position;
+                    }
+                }
+            }
 
-        //    position = end;
+            if (endEstate < 0 || (endEstate != state && tokenForState(lastSate) == -2))
+                throw new LexicalError(IScannerConstants.SCANNER_ERROR[lastSate], start);
 
-        //    int token = tokenForState(endState);
+            position = end;
 
-        //    if (token == 0)
-        //        return nextToken();
-        //    else
-        //    {
-        //        String lexeme = input.substring(start, end);
-        //        token = lookupToken(token, lexeme);
-        //        return new Token(token, lexeme, start);
-        //    }
-        //}
+            int token = tokenForState(endEstate);
+
+            if(token == 0)
+                return nextToken();
+
+            else
+            {
+                string lexeme = input.Substring(start, end- start);
+                token = lookupToken(token, lexeme);
+                return new Token(token, lexeme, start);
+            }
+        }
 
         private int nextState(char c, int state)
         {
-            int start = SCANNER_TABLE_INDEXES[state];
-            int end = SCANNER_TABLE_INDEXES[state + 1] - 1;
+            int start = IScannerConstants.SCANNER_TABLE_INDEXES[state];
+            int end = IScannerConstants.SCANNER_TABLE_INDEXES[state + 1] ;
 
             while (start <= end)
             {
                 int half = (start + end) / 2;
+                Console.WriteLine($"Checking character: {c}, Table value: {IScannerConstants.SCANNER_TABLE[half][0]}");
 
-                if (SCANNER_TABLE[half][0] == c)
-                    return SCANNER_TABLE[half][1];
-                else if (SCANNER_TABLE[half][0] < c)
+
+                if (IScannerConstants.SCANNER_TABLE[half][0] == c)
+                    return IScannerConstants.SCANNER_TABLE[half][1];
+                else if (IScannerConstants.SCANNER_TABLE[half][0] < c)
                     start = half + 1;
-                else  //(SCANNER_TABLE[half][0] > c)
+                else  //(ScannerConstants.SCANNER_TABLE[half][0] > c)
                     end = half - 1;
             }
 
@@ -119,44 +123,44 @@ namespace appCompilador
 
         private int tokenForState(int state)
         {
-            if (state < 0 || state >= TOKEN_STATE.length)
+            if (state < 0 || state >= IScannerConstants.TOKEN_STATE.Length)
                 return -1;
 
-            return TOKEN_STATE[state];
+            return IScannerConstants.TOKEN_STATE[state];
         }
 
-        public int lookupToken(int base, String key)
+        public int lookupToken(int index, string key)
         {
-            int start = SPECIAL_CASES_INDEXES[base];
-            int end = SPECIAL_CASES_INDEXES[base + 1] - 1;
+            int start = IScannerConstants.SPECIAL_CASES_INDEXES[index];
+            int end = IScannerConstants.SPECIAL_CASES_INDEXES[index + 1] - 1;
 
             while (start <= end)
             {
                 int half = (start + end) / 2;
-                int comp = SPECIAL_CASES_KEYS[half].compareTo(key);
+                int comp = IScannerConstants.SPECIAL_CASES_KEYS[half].CompareTo(key);
 
                 if (comp == 0)
-                    return SPECIAL_CASES_VALUES[half];
+                    return IScannerConstants.SPECIAL_CASES_VALUES[half];
                 else if (comp < 0)
                     start = half + 1;
                 else  //(comp > 0)
                     end = half - 1;
             }
 
-            return base;
+            return index;
         }
 
-        private boolean hasInput()
+        private bool hasInput()
         {
-            return position < input.length();
+            return position < input.Length;
         }
 
         private char nextChar()
         {
             if (hasInput())
-                return input.charAt(position++);
+                return input[position++];
             else
-                return (char)-1;
+                return '\0';
         }
     }
 }
