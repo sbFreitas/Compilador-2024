@@ -19,22 +19,22 @@ namespace appCompilador
             this.position = position;
         }
 
-        public final int getId()
+        public int GetId()
         {
             return id;
         }
 
-        public final String getLexeme()
+        public String GetLexeme()
         {
             return lexeme;
         }
 
-        public final int getPosition()
+        public int GetPosition()
         {
             return position;
         }
 
-        public String toString()
+        public override String ToString()
         {
             return id + " ( " + lexeme + " ) @ " + position;
         }

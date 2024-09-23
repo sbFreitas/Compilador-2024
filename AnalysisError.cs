@@ -11,26 +11,24 @@ namespace appCompilador
     {
         private int position;
 
-        public AnalysisError(String msg, int position)
-        {
-            super(msg);
+        public AnalysisError(String msg, int position) : base(msg)
+        { 
             this.position = position;
         }
 
-        public AnalysisError(String msg)
+        public AnalysisError(String msg) : base(msg)
         {
-            super(msg);
             this.position = -1;
         }
 
-        public int getPosition()
+        public int GetPosition()
         {
             return position;
         }
 
-        public String toString()
+        public String ToString()
         {
-            return super.toString() + ", @ " + position;
+            return base.ToString() + ", @ " + position;
         }
     }
 }

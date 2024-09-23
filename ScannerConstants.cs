@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace appCompilador
 {
-    public interface ScannerConstants
+    public class ScannerConstants
     {
-        int[] SCANNER_TABLE_INDEXES =
+        public readonly int[] SCANNER_TABLE_INDEXES =
     {
         0,
         54,
@@ -54,7 +54,7 @@ namespace appCompilador
         1096
     };
 
-        int[][] SCANNER_TABLE =
+        public readonly int[,] SCANNER_TABLE =
         {
         {9, 1},
         {10, 1},
@@ -1154,18 +1154,18 @@ namespace appCompilador
         {60, 40}
     };
 
-        int[] TOKEN_STATE = { -2, 0, 22, -1, -1, 34, 35, 29, 27, 31, 28, 30, 3, 3, 32, 25, 33, 26, 6, 6, -1, 24, 5, -1, 20, -1, 23, -2, -2, 21, 4, -2, 2, 2, -1, -2, 2, 2, 2, -2, 0 };
+        public readonly int[] TOKEN_STATE = { -2, 0, 22, -1, -1, 34, 35, 29, 27, 31, 28, 30, 3, 3, 32, 25, 33, 26, 6, 6, -1, 24, 5, -1, 20, -1, 23, -2, -2, 21, 4, -2, 2, 2, -1, -2, 2, 2, 2, -2, 0 };
 
-        int[] SPECIAL_CASES_INDEXES =
+        public readonly int[] SPECIAL_CASES_INDEXES =
             { 0, 0, 0, 0, 0, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13 };
 
-        String[] SPECIAL_CASES_KEYS =
+        public readonly string[] SPECIAL_CASES_KEYS =
             {  "elif", "else", "end", "false", "if", "main", "read", "repeat", "true", "until", "while", "write", "writeln" };
 
-        int[] SPECIAL_CASES_VALUES =
+        public readonly int[] SPECIAL_CASES_VALUES =
             {  10, 11, 8, 12, 9, 7, 14, 17, 13, 18, 19, 15, 16 };
 
-        String[] SCANNER_ERROR =
+        public readonly string[] SCANNER_ERROR =
         {
         "Caractere não esperado",
         "",

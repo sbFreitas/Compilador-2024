@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace appCompilador
 {
-    public interface Constants : ScannerConstants
+    public class Constants : ScannerConstants
     {
         int EPSILON = 0;
         int DOLLAR = 1;

@@ -14,7 +14,7 @@ namespace appCompilador
     {
         private int position;
         private string input;
-
+        private ScannerConstants sc = new ScannerConstants();
         public Lexico()
         {
             new StringReader("");
@@ -82,7 +82,7 @@ namespace appCompilador
             }
 
             if (endEstate < 0 || (endEstate != state && tokenForState(lastSate) == -2))
-                throw new LexicalError(IScannerConstants.SCANNER_ERROR[lastSate], start);
+                throw new LexicalError(sc.SCANNER_ERROR[lastSate], start);
 
             position = end;
 
@@ -101,18 +101,18 @@ namespace appCompilador
 
         private int nextState(char c, int state)
         {
-            int start = IScannerConstants.SCANNER_TABLE_INDEXES[state];
-            int end = IScannerConstants.SCANNER_TABLE_INDEXES[state + 1] ;
+            int start = sc.SCANNER_TABLE_INDEXES[state];
+            int end = sc.SCANNER_TABLE_INDEXES[state + 1] ;
 
             while (start <= end)
             {
                 int half = (start + end) / 2;
-                Console.WriteLine($"Checking character: {c}, Table value: {IScannerConstants.SCANNER_TABLE[half][0]}");
+                Console.WriteLine($"Checking character: {c}, Table value: {sc.SCANNER_TABLE[half,0]}");
 
 
-                if (IScannerConstants.SCANNER_TABLE[half][0] == c)
-                    return IScannerConstants.SCANNER_TABLE[half][1];
-                else if (IScannerConstants.SCANNER_TABLE[half][0] < c)
+                if (sc.SCANNER_TABLE[half,0] == c)
+                    return sc.SCANNER_TABLE[half,1];
+                else if (sc.SCANNER_TABLE[half,0] < c)
                     start = half + 1;
                 else  //(ScannerConstants.SCANNER_TABLE[half][0] > c)
                     end = half - 1;
@@ -123,24 +123,24 @@ namespace appCompilador
 
         private int tokenForState(int state)
         {
-            if (state < 0 || state >= IScannerConstants.TOKEN_STATE.Length)
+            if (state < 0 || state >= sc.TOKEN_STATE.Length)
                 return -1;
 
-            return IScannerConstants.TOKEN_STATE[state];
+            return sc.TOKEN_STATE[state];
         }
 
         public int lookupToken(int index, string key)
         {
-            int start = IScannerConstants.SPECIAL_CASES_INDEXES[index];
-            int end = IScannerConstants.SPECIAL_CASES_INDEXES[index + 1] - 1;
+            int start = sc.SPECIAL_CASES_INDEXES[index];
+            int end = sc.SPECIAL_CASES_INDEXES[index + 1] - 1;
 
             while (start <= end)
             {
                 int half = (start + end) / 2;
-                int comp = IScannerConstants.SPECIAL_CASES_KEYS[half].CompareTo(key);
+                int comp = sc.SPECIAL_CASES_KEYS[half].CompareTo(key);
 
                 if (comp == 0)
-                    return IScannerConstants.SPECIAL_CASES_VALUES[half];
+                    return sc.SPECIAL_CASES_VALUES[half];
                 else if (comp < 0)
                     start = half + 1;
                 else  //(comp > 0)
