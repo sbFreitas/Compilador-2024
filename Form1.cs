@@ -279,18 +279,18 @@ public partial class Form1 : Form
             Token? t = null;
             while ((t = lexico.nextToken()) != null)
             {
-                messageArea.Text += t.getLexeme();
+                messageArea.Text += t.GetLexeme();
 
                 // só escreve o lexema, necessário escrever t.getId, t.getPosition()
 
                 // t.getId () - retorna o identificador da classe. Olhar Constants.java e adaptar, pois 
                 // deve ser apresentada a classe por extenso
-                string tokenClass = GetTokenClassById(t.getId());
+                string tokenClass = GetTokenClassById(t.GetId());
                 messageArea.Text += $" Classe do token: {tokenClass} ";
 
                 // t.getPosition () - retorna a posição inicial do lexema no editor, necessário adaptar 
                 // para mostrar a linha	
-                int line = GetLineFromPosition(t.getPosition());
+                int line = GetLineFromPosition(t.GetPosition());
                 messageArea.Text += $"Posição: linha {line}\n";
 
                 // esse código apresenta os tokens enquanto não ocorrer erro
@@ -304,7 +304,7 @@ public partial class Form1 : Form
 
         catch (LexicalError error)
         {  // tratamento de erros
-            messageArea.Text = error.Message + " em " + GetLineFromPosition(error.getPosition());
+            messageArea.Text = error.Message + " em " + GetLineFromPosition(error.GetPosition());
 
             // e.getMessage() - retorna a mensagem de erro de SCANNER_ERRO (olhar ScannerConstants.java 
             // e adaptar conforme o enunciado da parte 2)

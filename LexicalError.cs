@@ -8,14 +8,8 @@ namespace appCompilador
 {
     public class LexicalError : AnalysisError
     {
-        public LexicalError(String msg, int position)
-        {
-            super(msg, position);
-        }
+        public LexicalError(String msg, int position) : base (msg, position) { }
 
-        public LexicalError(String msg)
-        {
-            super(msg);
-        }
+        public LexicalError(String msg) : base(msg) { }
     }
 }
