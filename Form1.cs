@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 public partial class Form1 : Form
 {
@@ -274,25 +275,33 @@ public partial class Form1 : Form
         Lexico lexico = new Lexico();
         string editorText = editor.Text;
         lexico.setInput(new StringReader(editorText));
+
+
+
         try
         {
             Token? t = null;
+
+            messageArea.Text += "linha      classe            lexema" + Environment.NewLine;
+
             while ((t = lexico.nextToken()) != null)
             {
-                messageArea.Text += t.GetLexeme();
 
-                // só escreve o lexema, necessário escrever t.getId, t.getPosition()
-
-                // t.getId () - retorna o identificador da classe. Olhar Constants.java e adaptar, pois 
-                // deve ser apresentada a classe por extenso
-                string tokenClass = GetTokenClassById(t.GetId());
-                messageArea.Text += $" Classe do token: {tokenClass} ";
 
                 // t.getPosition () - retorna a posição inicial do lexema no editor, necessário adaptar 
                 // para mostrar a linha	
                 int line = GetLineFromPosition(t.GetPosition());
-                messageArea.Text += $"Posição: linha {line}\n";
+                messageArea.Text += $"{line}          ";
 
+
+                // t.getId () - retorna o identificador da classe. Olhar Constants.java e adaptar, pois 
+                // deve ser apresentada a classe por extenso
+                string tokenClass = GetTokenClassById(t.GetId());
+                messageArea.Text += $"{tokenClass}                 ";
+
+                // só escreve o lexema, necessário escrever t.getId, t.getPosition()
+                messageArea.Text += t.GetLexeme() + Environment.NewLine;
+                
                 // esse código apresenta os tokens enquanto não ocorrer erro
                 // no entanto, os tokens devem ser apresentados SÓ se não ocorrer erro, necessário adaptar 
                 // para atender o que foi solicitado
@@ -304,8 +313,34 @@ public partial class Form1 : Form
 
         catch (LexicalError error)
         {  // tratamento de erros
-            messageArea.Text = error.Message + " em " + GetLineFromPosition(error.GetPosition());
+            if (error.Message.Equals("símbolo inválido"))
+            {
+                messageArea.Text = "linha " + GetLineFromPosition(error.GetPosition()) + $": {editor.Text[error.GetPosition()]} " + error.Message;
+            } else
+            if( error.Message.Equals("palavra reservada inválida") ||
+                error.Message.Equals("identificador inválido"))
+            {
+                int position = error.GetPosition();
+                string caracter = editor.Text[position].ToString();
+                string text = caracter;
+                try
+                {
+                    caracter = editor.Text[position + 1].ToString();
+         
+                    while (caracter != " " && caracter != "\n")
+                    {
+                        position++;
+                        caracter = editor.Text[position].ToString();
+                        text += caracter;
+                    }
+                }
+                catch { }
+                messageArea.Text = "linha " + GetLineFromPosition(error.GetPosition()) + $": {text} " + error.Message;
+            } else
+            {
+                messageArea.Text = "linha " + GetLineFromPosition(error.GetPosition()) + $": "+ error.Message;
 
+            }
             // e.getMessage() - retorna a mensagem de erro de SCANNER_ERRO (olhar ScannerConstants.java 
             // e adaptar conforme o enunciado da parte 2)
             // e.getPosition() - retorna a posição inicial do erro, tem que adaptar para mostrar a 
@@ -347,3 +382,4 @@ public partial class Form1 : Form
         return line + 1;
     }
 }
+

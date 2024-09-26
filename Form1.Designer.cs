@@ -53,9 +53,9 @@ partial class Form1
         toolbar.ImageScalingSize = new Size(20, 20);
         toolbar.Items.AddRange(new ToolStripItem[] { buttonNew, buttonOpen, buttonSave, buttonCopy, buttonPaste, buttonCut, buttonCompile, buttonTeam });
         toolbar.Location = new Point(0, 0);
-        toolbar.MinimumSize = new Size(900, 70);
+        toolbar.MinimumSize = new Size(788, 52);
         toolbar.Name = "toolbar";
-        toolbar.Size = new Size(900, 70);
+        toolbar.Size = new Size(788, 52);
         toolbar.TabIndex = 0;
         toolbar.Text = "toolStrip1";
         // 
@@ -167,9 +167,10 @@ partial class Form1
         // 
         splitter.BackColor = Color.LightGray;
         splitter.Dock = DockStyle.Bottom;
-        splitter.Location = new Point(0, 368);
+        splitter.Location = new Point(0, 276);
+        splitter.Margin = new Padding(3, 2, 3, 2);
         splitter.Name = "splitter";
-        splitter.Size = new Size(900, 11);
+        splitter.Size = new Size(788, 8);
         splitter.TabIndex = 2;
         splitter.TabStop = false;
         // 
@@ -178,12 +179,13 @@ partial class Form1
         messageArea.BackColor = Color.WhiteSmoke;
         messageArea.BorderStyle = BorderStyle.None;
         messageArea.Dock = DockStyle.Bottom;
-        messageArea.Location = new Point(0, 379);
+        messageArea.Location = new Point(0, 284);
+        messageArea.Margin = new Padding(3, 2, 3, 2);
         messageArea.Multiline = true;
         messageArea.Name = "messageArea";
         messageArea.ReadOnly = true;
         messageArea.ScrollBars = ScrollBars.Both;
-        messageArea.Size = new Size(900, 196);
+        messageArea.Size = new Size(788, 147);
         messageArea.TabIndex = 3;
         messageArea.WordWrap = false;
         // 
@@ -193,26 +195,28 @@ partial class Form1
         statusBar.BackColor = SystemColors.Info;
         statusBar.ImageScalingSize = new Size(20, 20);
         statusBar.Items.AddRange(new ToolStripItem[] { statusBarLabel });
-        statusBar.Location = new Point(0, 575);
+        statusBar.Location = new Point(0, 431);
         statusBar.Name = "statusBar";
-        statusBar.Size = new Size(900, 25);
+        statusBar.Padding = new Padding(1, 0, 12, 0);
+        statusBar.Size = new Size(788, 19);
         statusBar.TabIndex = 4;
         statusBar.Text = "statusBar";
         // 
         // statusBarLabel
         // 
         statusBarLabel.Name = "statusBarLabel";
-        statusBarLabel.Size = new Size(0, 19);
+        statusBarLabel.Size = new Size(0, 14);
         // 
         // editor
         // 
         editor.AcceptsTab = true;
         editor.BorderStyle = BorderStyle.None;
         editor.Dock = DockStyle.Fill;
-        editor.Location = new Point(27, 70);
+        editor.Location = new Point(24, 52);
+        editor.Margin = new Padding(3, 2, 3, 2);
         editor.Name = "editor";
         editor.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
-        editor.Size = new Size(873, 298);
+        editor.Size = new Size(764, 224);
         editor.TabIndex = 0;
         editor.Text = "";
         editor.WordWrap = false;
@@ -225,25 +229,27 @@ partial class Form1
         panelLineNumbers.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         panelLineNumbers.BackColor = SystemColors.Info;
         panelLineNumbers.Dock = DockStyle.Left;
-        panelLineNumbers.Location = new Point(0, 70);
+        panelLineNumbers.Location = new Point(0, 52);
+        panelLineNumbers.Margin = new Padding(3, 2, 3, 2);
         panelLineNumbers.Name = "panelLineNumbers";
-        panelLineNumbers.Size = new Size(27, 298);
+        panelLineNumbers.Size = new Size(24, 224);
         panelLineNumbers.TabIndex = 6;
         panelLineNumbers.Paint += Panel_Paint;
         // 
         // Form1
         // 
-        AutoScaleDimensions = new SizeF(8F, 20F);
+        AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         AutoSizeMode = AutoSizeMode.GrowAndShrink;
-        ClientSize = new Size(900, 600);
+        ClientSize = new Size(788, 450);
         Controls.Add(editor);
         Controls.Add(panelLineNumbers);
         Controls.Add(splitter);
         Controls.Add(messageArea);
         Controls.Add(toolbar);
         Controls.Add(statusBar);
-        MinimumSize = new Size(910, 600);
+        Margin = new Padding(3, 2, 3, 2);
+        MinimumSize = new Size(798, 460);
         Name = "Form1";
         Text = "Compilador";
         Load += Form1_Load;
