@@ -282,29 +282,19 @@ public partial class Form1 : Form
         {
             Token? t = null;
 
-            messageArea.Text += "linha      classe            lexema" + Environment.NewLine;
+            messageArea.Text += "linha        classe             lexema" + Environment.NewLine;
 
             while ((t = lexico.nextToken()) != null)
             {
 
 
-                // t.getPosition () - retorna a posição inicial do lexema no editor, necessário adaptar 
-                // para mostrar a linha	
                 int line = GetLineFromPosition(t.GetPosition());
                 messageArea.Text += $"{line}          ";
 
-
-                // t.getId () - retorna o identificador da classe. Olhar Constants.java e adaptar, pois 
-                // deve ser apresentada a classe por extenso
                 string tokenClass = GetTokenClassById(t.GetId());
                 messageArea.Text += $"{tokenClass}                 ";
 
-                // só escreve o lexema, necessário escrever t.getId, t.getPosition()
                 messageArea.Text += t.GetLexeme() + Environment.NewLine;
-                
-                // esse código apresenta os tokens enquanto não ocorrer erro
-                // no entanto, os tokens devem ser apresentados SÓ se não ocorrer erro, necessário adaptar 
-                // para atender o que foi solicitado
 
             }
 
@@ -341,10 +331,7 @@ public partial class Form1 : Form
                 messageArea.Text = "linha " + GetLineFromPosition(error.GetPosition()) + $": "+ error.Message;
 
             }
-            // e.getMessage() - retorna a mensagem de erro de SCANNER_ERRO (olhar ScannerConstants.java 
-            // e adaptar conforme o enunciado da parte 2)
-            // e.getPosition() - retorna a posição inicial do erro, tem que adaptar para mostrar a 
-            // linha  
+
         }
     }
 
@@ -368,7 +355,7 @@ public partial class Form1 : Form
             case 4: return "Constante_float";
             case 5: return "Constante_string";
             case 6: return "Palavra";
-            case int i when (i >= 7 && i <= 19): return "Palavra reservadda";
+            case int i when (i >= 7 && i <= 19): return "Palavra reservada";
             case int i when (i >= 20 && i <= 35): return "Símbolo Especial";
             default: return "Desconhecido";
         }
