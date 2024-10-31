@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 public partial class Form1 : Form
 {
@@ -161,6 +162,8 @@ public partial class Form1 : Form
         {
             g.Clear(panelLineNumbers.BackColor);
 
+            g.DrawString((firstLine + 1).ToString(), editor.Font, Brushes.Black, new PointF(0, 0));
+
             for (int i = firstLine; i < totalLines; i++)
             {
                 int y = editor.GetPositionFromCharIndex(editor.GetFirstCharIndexFromLine(i)).Y;
@@ -241,43 +244,124 @@ public partial class Form1 : Form
     }
 
     private void ButtonCopy_Click(object? sender, EventArgs e)
+    {
+        if (editor.SelectedText != "")
         {
-            if (editor.SelectedText != "")
-            {
-                editor.Copy(); // Copia o texto selecionado para a área de transferência
-            }
-        }
-
-        private void ButtonPaste_Click(object? sender, EventArgs e)
-        {
-            if (Clipboard.ContainsText())
-            {
-                editor.Paste(); // Cola o texto da área de transferência no editor
-            }
-        }
-
-        private void ButtonCut_Click(object? sender, EventArgs e)
-        {
-            if (editor.SelectedText != "")
-            {
-                editor.Cut(); // Corta o texto selecionado e o coloca na área de transferência
-            }
-        }
-
-        private void ButtonCompile_Click(object? sender, EventArgs e)
-        {
-            messageArea.Clear();
-            messageArea.Text = "compilação de programas ainda não foi implementada";
-        }
-
-        private void ButtonTeam_Click(object? sender, EventArgs e)
-        {
-            messageArea.Clear();
-            messageArea.Text = "Pedro, Marlon e Sarah";
-        }
-
-        private void Editor_Layout(object? sender, LayoutEventArgs e)
-        {
-            UpdateLineNumbers();
+            editor.Copy(); // Copia o texto selecionado para a área de transferência
         }
     }
+
+    private void ButtonPaste_Click(object? sender, EventArgs e)
+    {
+        if (Clipboard.ContainsText())
+        {
+            editor.Paste(); // Cola o texto da área de transferência no editor
+        }
+    }
+
+    private void ButtonCut_Click(object? sender, EventArgs e)
+    {
+        if (editor.SelectedText != "")
+        {
+            editor.Cut(); // Corta o texto selecionado e o coloca na área de transferência
+        }
+    }
+
+    private void ButtonCompile_Click(object? sender, EventArgs e)
+    {
+        messageArea.Clear();
+        //messageArea.Text = "compilação de programas ainda não foi implementada";
+
+        Lexico lexico = new Lexico();
+        Sintatico sintatico = new Sintatico();
+        //sintatico.SetForm(this);
+        Semantico semantico = new Semantico();
+        string editorText = editor.Text;
+        lexico.setInput(new StringReader(editorText));
+
+
+
+        try
+        {
+            sintatico.Parse(lexico, semantico);
+            messageArea.Text += "Programa compilado com sucesso\n";
+        }
+
+        catch (LexicalError error)
+        {  // tratamento de erros
+            if (error.Message.Equals("símbolo inválido"))
+            {
+                messageArea.Text = "linha " + GetLineFromPosition(error.GetPosition()) + $": {editor.Text[error.GetPosition()]} " + error.Message;
+            } else
+            if( error.Message.Equals("palavra reservada inválida") ||
+                error.Message.Equals("identificador inválido"))
+            {
+                int position = error.GetPosition();
+                string caracter = editor.Text[position].ToString();
+                string text = caracter;
+                try
+                {
+                    caracter = editor.Text[position + 1].ToString();
+         
+                    while (caracter != " " && caracter != "\n")
+                    {
+                        position++;
+                        caracter = editor.Text[position].ToString();
+                        text += caracter;
+                    }
+                }
+                catch { }
+                messageArea.Text = "linha " + GetLineFromPosition(error.GetPosition()) + $": {text} " + error.Message;
+            } else
+            {
+                messageArea.Text = "linha " + GetLineFromPosition(error.GetPosition()) + $": "+ error.Message;
+
+            }
+
+        } catch ( SyntaticError error )
+        {
+            messageArea.Text = "Erro na linha " +
+                GetLineFromPosition(error.GetPosition()) + 
+                " - encontrado " + 
+                sintatico.GetToken().GetLexeme() +
+                " " +
+                error.Message;
+        }
+
+    }
+
+    private void ButtonTeam_Click(object? sender, EventArgs e)
+    {
+        messageArea.Clear();
+        messageArea.Text = "Pedro, Marlon e Sarah";
+    }
+
+    private void Editor_Layout(object? sender, LayoutEventArgs e)
+    {
+        UpdateLineNumbers();
+    }
+
+    private static string GetTokenClassById(int id)
+    {
+        switch(id) 
+        {
+            case 2: return "Identificador";
+            case 3: return "Constante_int";
+            case 4: return "Constante_float";
+            case 5: return "Constante_string";
+            case 6: return "Palavra";
+            case int i when (i >= 7 && i <= 19): return "Palavra reservada";
+            case int i when (i >= 20 && i <= 35): return "Símbolo Especial";
+            default: return "Desconhecido";
+        }
+    }
+
+    public int GetLineFromPosition(int position)
+    {
+        Point pos = editor.GetPositionFromCharIndex(position);
+        int line = editor.GetLineFromCharIndex(editor.GetCharIndexFromPosition(pos));
+
+        return line + 1;
+    }
+}
+
