@@ -148,6 +148,12 @@ public partial class Form1 : Form
         panelLineNumbers.Invalidate();
     }
 
+    public String GetNextChar(int position)
+    {
+        Point pos = editor.GetPositionFromCharIndex(position);
+        return editor.GetCharFromPosition(pos).ToString();
+    }
+
     private void UpdateLineNumbers()
     {
         // Get the first visible line index
@@ -182,6 +188,8 @@ public partial class Form1 : Form
     private void ButtonNew_Click(object? sender, EventArgs e)
     {
         ClearAll();
+        path = "";
+        newFile = true;
     }
 
     private void ButtonOpen_Click(object? sender, EventArgs e)
@@ -273,31 +281,16 @@ public partial class Form1 : Form
         //messageArea.Text = "compilação de programas ainda não foi implementada";
 
         Lexico lexico = new Lexico();
+        lexico.SetForm1(this);
+        Sintatico sintatico = new Sintatico();
+        sintatico.SetForm(this);
+        Semantico semantico = new Semantico();
         string editorText = editor.Text;
         lexico.setInput(new StringReader(editorText));
 
-
-
         try
         {
-            Token? t = null;
-
-            messageArea.Text += "linha        classe             lexema" + Environment.NewLine;
-
-            while ((t = lexico.nextToken()) != null)
-            {
-
-
-                int line = GetLineFromPosition(t.GetPosition());
-                messageArea.Text += $"{line}          ";
-
-                string tokenClass = GetTokenClassById(t.GetId());
-                messageArea.Text += $"{tokenClass}                 ";
-
-                messageArea.Text += t.GetLexeme() + Environment.NewLine;
-
-            }
-
+            sintatico.Parse(lexico, semantico);
             messageArea.Text += "Programa compilado com sucesso\n";
         }
 
@@ -306,8 +299,9 @@ public partial class Form1 : Form
             if (error.Message.Equals("símbolo inválido"))
             {
                 messageArea.Text = "linha " + GetLineFromPosition(error.GetPosition()) + $": {editor.Text[error.GetPosition()]} " + error.Message;
-            } else
-            if( error.Message.Equals("palavra reservada inválida") ||
+            }
+            else
+            if (error.Message.Equals("palavra reservada inválida") ||
                 error.Message.Equals("identificador inválido"))
             {
                 int position = error.GetPosition();
@@ -316,7 +310,7 @@ public partial class Form1 : Form
                 try
                 {
                     caracter = editor.Text[position + 1].ToString();
-         
+
                     while (caracter != " " && caracter != "\n")
                     {
                         position++;
@@ -326,13 +320,33 @@ public partial class Form1 : Form
                 }
                 catch { }
                 messageArea.Text = "linha " + GetLineFromPosition(error.GetPosition()) + $": {text} " + error.Message;
-            } else
+            }
+            else
             {
-                messageArea.Text = "linha " + GetLineFromPosition(error.GetPosition()) + $": "+ error.Message;
+                messageArea.Text = "linha " + GetLineFromPosition(error.GetPosition()) + $": " + error.Message;
 
             }
 
         }
+        catch (SyntaticError error)
+        {
+            string lexema;
+            if (sintatico.GetToken().GetId() == 5)
+                lexema = "constante_string";
+            else
+                lexema = sintatico.GetToken().GetLexeme();
+            messageArea.Text = "Erro na linha " +
+                GetLineFromPosition(error.GetPosition()) +
+                " - encontrado " +
+                lexema +
+                " " +
+                error.Message;
+        }
+        catch (SemanticError error )
+        {
+            messageArea.Text = error.Message;
+        }
+
     }
 
     private void ButtonTeam_Click(object? sender, EventArgs e)
@@ -361,7 +375,7 @@ public partial class Form1 : Form
         }
     }
 
-    private int GetLineFromPosition(int position)
+    public int GetLineFromPosition(int position)
     {
         Point pos = editor.GetPositionFromCharIndex(position);
         int line = editor.GetLineFromCharIndex(editor.GetCharIndexFromPosition(pos));

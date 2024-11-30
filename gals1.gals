@@ -1,0 +1,64 @@
+#Options
+GenerateScanner = true
+GenerateParser = false
+Language = Java
+ScannerName = Lexico
+ScannerCaseSensitive = true
+ScannerTable = Compact
+Input = Stream
+#RegularDefinitions
+
+id_aux: (([0-9]|[a-z])+[A-Z]?)*
+float_aux:([1-9][0-9]*|0)
+string_aux: (%x)
+
+#Tokens
+//especificar
+
+Id:![ifbs]"_"[A-Z]{id_aux}|[ifbs]"_"[a-z][A-Z]?{id_aux}
+
+cte_int:[1-9][0-9]*|0
+
+cte_float:{float_aux}","([0-9]*[1-9]|0)
+
+cte_string: \"([^\n\"%]|{string_aux}*)*\"
+
+palavra: [a-z][a-zA-Z]*
+
+:[\s\t\n]
+
+//bloco:
+:! >@\n[^@]*\n@<
+
+main = palavra: "main"
+end = palavra: "end"
+if = palavra: "if"
+elif = palavra: "elif"
+else = palavra: "else"
+false = palavra: "false"
+true = palavra: "true"
+read = palavra: "read"
+write = palavra: "write"
+writeln = palavra: "writeln"
+repeat = palavra: "repeat"
+until = palavra: "until"
+while = palavra: "while"
+
+//simbolo_especial:
+"&&"
+"||"
+"!"
+"=="
+"!="
+"<"
+">"
+"+"
+"-"
+"*"
+"/"
+","
+";"
+"="
+"("
+")"
+

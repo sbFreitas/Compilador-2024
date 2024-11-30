@@ -15,6 +15,12 @@ namespace appCompilador
         private int position;
         private string input;
         private ScannerConstants sc = new ScannerConstants();
+        private Form1 form;
+
+        public void SetForm1(Form1 form)
+        {
+            this.form = form;  
+        }
         public Lexico()
         {
             new StringReader("");
@@ -63,7 +69,7 @@ namespace appCompilador
             int endEstate = -1;
             int end = -1;
 
-            while(hasInput())
+            while (hasInput())
             {
                 lastSate = state;
                 state = nextState(nextChar(), state);
@@ -73,14 +79,14 @@ namespace appCompilador
 
                 else
                 {
-                    if(tokenForState(state) >= 0)
+                    if (tokenForState(state) >= 0)
                     {
                         endEstate = state;
                         end = position;
                     }
                 }
             }
-
+            
             if (endEstate < 0 || (endEstate != state && tokenForState(lastSate) == -2))
                 throw new LexicalError(sc.SCANNER_ERROR[lastSate], start);
 
@@ -88,13 +94,29 @@ namespace appCompilador
 
             int token = tokenForState(endEstate);
 
-            if(token == 0)
+
+
+            if (token == 0)
                 return nextToken();
 
             else
             {
-                string lexeme = input.Substring(start, end- start);
+                string lexeme = input.Substring(start, end - start);
+                lexeme = lexeme.Trim();
+                if (lexeme.Equals("="))
+                {
+                    token = 33;
+                    if (this.form.GetNextChar(position).Equals("="))
+                    {
+                        token = 23;
+                        lexeme = "==";
+                        position++;
+                    }
+                }
+
                 token = lookupToken(token, lexeme);
+                if (token == 6)
+                    throw new LexicalError(sc.SCANNER_ERROR[lastSate], start);
                 return new Token(token, lexeme, start);
             }
         }
@@ -102,17 +124,17 @@ namespace appCompilador
         private int nextState(char c, int state)
         {
             int start = sc.SCANNER_TABLE_INDEXES[state];
-            int end = sc.SCANNER_TABLE_INDEXES[state + 1] ;
+            int end = sc.SCANNER_TABLE_INDEXES[state + 1];
 
             while (start <= end)
             {
                 int half = (start + end) / 2;
-                Console.WriteLine($"Checking character: {c}, Table value: {sc.SCANNER_TABLE[half,0]}");
+                Console.WriteLine($"Checking character: {c}, Table value: {sc.SCANNER_TABLE[half, 0]}");
 
 
-                if (sc.SCANNER_TABLE[half,0] == c)
-                    return sc.SCANNER_TABLE[half,1];
-                else if (sc.SCANNER_TABLE[half,0] < c)
+                if (sc.SCANNER_TABLE[half, 0] == c)
+                    return sc.SCANNER_TABLE[half, 1];
+                else if (sc.SCANNER_TABLE[half, 0] < c)
                     start = half + 1;
                 else  //(ScannerConstants.SCANNER_TABLE[half][0] > c)
                     end = half - 1;
