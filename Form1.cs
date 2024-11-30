@@ -270,21 +270,29 @@ public partial class Form1 : Form
     private void ButtonCompile_Click(object? sender, EventArgs e)
     {
         messageArea.Clear();
-        //messageArea.Text = "compilação de programas ainda não foi implementada";
 
         Lexico lexico = new Lexico();
         Sintatico sintatico = new Sintatico();
-        //sintatico.SetForm(this);
         Semantico semantico = new Semantico();
         string editorText = editor.Text;
         lexico.setInput(new StringReader(editorText));
 
-
-
         try
         {
             sintatico.Parse(lexico, semantico);
-            messageArea.Text += "Programa compilado com sucesso\n";
+            messageArea.Text += "Programa compilado com sucesso" + "\n";
+
+            string sourceFilePath = editor.Tag?.ToString();  //Path.GetDirectoryName(editorText);
+
+            if(string.IsNullOrEmpty(sourceFilePath))
+            {
+                messageArea.Text += "Erro: Arquivo fonte não foi salvo. Salve o arquivo antes de compilar.";
+                return;
+            }
+
+            string ilFilePath = Path.ChangeExtension(sourceFilePath, ".il");
+
+            //File.WriteAllText(ilFilePath, semantico.ExecuteAction());
         }
 
         catch (LexicalError error)

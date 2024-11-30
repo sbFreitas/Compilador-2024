@@ -9,11 +9,11 @@ namespace appCompilador
     public class Token
     {
         private int id;
-        private String lexeme;
+        private string lexeme;
         private int position;
         public Form1 form;
 
-        public Token(int id, String lexeme, int position)
+        public Token(int id, string lexeme, int position)
         {
             this.id = id;
             this.lexeme = lexeme;
@@ -30,7 +30,7 @@ namespace appCompilador
             return id;
         }
 
-        public String GetLexeme()
+        public string GetLexeme()
         {
             return lexeme;
         }
@@ -45,7 +45,7 @@ namespace appCompilador
             return position;
         }
 
-        public override String ToString()
+        public override string ToString()
         {
             return id + " ( " + lexeme + " ) @ " + position;
         }

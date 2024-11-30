@@ -59,13 +59,13 @@ namespace appCompilador
             int start = position;
 
             int state = 0;
-            int lastSate = 0;
-            int endEstate = -1;
+            int lastState = 0;
+            int endState = -1;
             int end = -1;
 
             while(hasInput())
             {
-                lastSate = state;
+                lastState = state;
                 state = nextState(nextChar(), state);
 
                 if (state < 0)
@@ -75,18 +75,18 @@ namespace appCompilador
                 {
                     if(tokenForState(state) >= 0)
                     {
-                        endEstate = state;
+                        endState = state;
                         end = position;
                     }
                 }
             }
 
-            if (endEstate < 0 || (endEstate != state && tokenForState(lastSate) == -2))
-                throw new LexicalError(sc.SCANNER_ERROR[lastSate], start);
+            if (endState < 0 || (endState != state && tokenForState(lastState) == -2))
+                throw new LexicalError(sc.SCANNER_ERROR[lastState], start);
 
             position = end;
 
-            int token = tokenForState(endEstate);
+            int token = tokenForState(endState);
 
             if(token == 0)
                 return nextToken();

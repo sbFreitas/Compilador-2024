@@ -14,6 +14,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = appCompilador
-build_property.ProjectDir = C:\Users\Pedro\Documents\Visual Studio 2022\Compilador-2024_2\
+build_property.ProjectDir = C:\Users\sarah\Documents\Furb\Compiladores - 2024\appCompilador\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

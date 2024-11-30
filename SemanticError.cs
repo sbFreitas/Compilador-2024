@@ -8,8 +8,8 @@ namespace appCompilador
 {
     public class SemanticError : AnalysisError
     {
-        public SemanticError(String msg, int position) : base(msg, position) { }
+        public SemanticError(string msg, int position) : base(msg, position) { }
 
-        public SemanticError(String msg) : base(msg) { }
+        public SemanticError(string msg) : base(msg) { }
     }
 }
