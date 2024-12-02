@@ -81,6 +81,8 @@ public class Sintatico : Constants
         }
         else // IsSemanticAction(x)
         {
+            if (previousToken != null)
+                previousToken.SetForm(this.form);
             semanticAnalyser.ExecuteAction(x - pc.FIRST_SEMANTIC_ACTION, previousToken);
             return false;
         }

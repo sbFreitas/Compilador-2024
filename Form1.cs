@@ -202,6 +202,7 @@ public partial class Form1 : Form
             try
             {
                 editor.LoadFile(openFileDialog.FileName, RichTextBoxStreamType.PlainText);
+                path = openFileDialog.FileName;
                 messageArea.Clear();
                 statusBarLabel.Text = openFileDialog.FileName;
             }
@@ -277,6 +278,12 @@ public partial class Form1 : Form
 
     private void ButtonCompile_Click(object? sender, EventArgs e)
     {
+        if (path == "")
+        {
+            messageArea.Text = "Arquivo deve ser salvo antes de compilar!";
+            return;
+        }
+
         messageArea.Clear();
         //messageArea.Text = "compilação de programas ainda não foi implementada";
 
@@ -291,9 +298,22 @@ public partial class Form1 : Form
         try
         {
             sintatico.Parse(lexico, semantico);
+
+            List<string> codigo = semantico.GetCodigo;
+
+            string fullPath = statusBarLabel.Text.Trim();
+
+            if (string.IsNullOrEmpty(fullPath))
+            {
+                messageArea.Text += "Erro: Arquivo fonte não foi salvo. Salve o arquivo antes de compilar.";
+                return;
+            }
+
+            string ilFilePath = Path.ChangeExtension(fullPath, ".il");
+            string ilFile = string.Join(Environment.NewLine, codigo);
+            File.WriteAllText(ilFilePath, ilFile);
             messageArea.Text += "Programa compilado com sucesso\n";
         }
-
         catch (LexicalError error)
         {  // tratamento de erros
             if (error.Message.Equals("símbolo inválido"))
